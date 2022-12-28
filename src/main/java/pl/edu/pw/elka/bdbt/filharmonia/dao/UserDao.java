@@ -25,6 +25,6 @@ public class UserDao {
         Example<User> example = Example.of(user);
         User result = userRepository.findOne(example).orElseThrow(() -> new UsernameNotFoundException("No user was found"));
 
-        return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(), Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
+        return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(), Collections.singleton(new SimpleGrantedAuthority(result.getRole())));
     }
 }

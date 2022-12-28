@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/**").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasRole("USER")
                 .antMatchers("/").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/auth").permitAll()

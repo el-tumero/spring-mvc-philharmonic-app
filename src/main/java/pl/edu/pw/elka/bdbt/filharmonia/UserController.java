@@ -1,18 +1,36 @@
 package pl.edu.pw.elka.bdbt.filharmonia;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpCookie;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pw.elka.bdbt.filharmonia.config.JwtUtils;
+import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
+
+    private final AuthenticationManager authenticationManager;
+    private final UserDao userDao;
+    private final JwtUtils jwtUtils;
 
     @Autowired
     UserRepository userRepository;
+
 
     @GetMapping("/register")
     public String register(Model model){
@@ -22,16 +40,40 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String loginForm(Model model) {
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @PostMapping("/register")
     public String createUser(@ModelAttribute User user, Model model) {
+        user.setRole("ROLE_USER");
         userRepository.save(user);
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "done";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute User user, Model model, HttpServletResponse response) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+        );
+
+        final UserDetails userDetails = userDao.findUserByEmail(user.getEmail());
+
+        if(userDetails != null){
+
+            String token = jwtUtils.generateToken(userDetails);
+            Cookie cookie = new Cookie("token", token);
+            cookie.setPath("/");
+            cookie.setMaxAge(60480);
+            response.addCookie(cookie);
+            return "done";
+        }
+
+        return "wrong";
     }
 
 }

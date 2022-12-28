@@ -30,12 +30,14 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String role;
 
     @Column(nullable = true)
     private String phoneNumber;
-
-    @Column(nullable = false)
-    private String password;
 
     @Column(nullable = true)
     private String firstName;
@@ -64,6 +66,8 @@ public class User {
         return password;
     }
 
+    public String getRole() { return role; }
+
     public String getFirstName() {
         return firstName;
     }
@@ -83,6 +87,8 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setRole(String role) { this.role = role; }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
