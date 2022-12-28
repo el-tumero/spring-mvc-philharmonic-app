@@ -14,9 +14,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-//    @GetMapping
-//    List<User> getUsers() { return userRepository.findAll(); }
-
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("message", "ssr java epic");
@@ -24,11 +21,15 @@ public class UserController {
         return "register";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @PostMapping("/register")
     public String createUser(@ModelAttribute User user, Model model) {
         userRepository.save(user);
         List<User> users = userRepository.findAll();
-//        users.get(0).getEmail()
         model.addAttribute("users", users);
         return "done";
     }

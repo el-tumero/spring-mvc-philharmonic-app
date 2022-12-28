@@ -37,8 +37,11 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-//                .antMatchers("/auth/**").permitAll()
+//                .antMatchers("/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/auth").permitAll()
+                .antMatchers("/user/**").permitAll()
 //                .antMatchers("/user/**").permitAll()
                 .anyRequest()
                 .authenticated()

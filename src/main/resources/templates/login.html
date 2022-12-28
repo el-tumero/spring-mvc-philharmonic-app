@@ -4,11 +4,13 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
+    <script defer th:src="@{/js/login.js}"></script>
 </head>
 <body>
-<div th:fragment="title">
-    <h1>Welcome!</h1>
-</div>
-
+<input type="text" id="email">
+<input type="password" id="password">
+<button id="login_btn">Login</button>
 </body>
+
 </html>
