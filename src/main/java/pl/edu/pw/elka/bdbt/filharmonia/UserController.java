@@ -17,6 +17,7 @@ import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -54,8 +55,17 @@ public class UserController {
         return "done";
     }
 
+    @PostMapping("/logout")
+    public void logout(HttpServletResponse response) throws IOException {
+        Cookie cookie = new Cookie("token", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        response.sendRedirect("/");
+    }
+
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, Model model, HttpServletResponse response) {
+    public String login(@ModelAttribute User user, Model model, HttpServletResponse response) throws IOException {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
@@ -70,7 +80,7 @@ public class UserController {
             cookie.setPath("/");
             cookie.setMaxAge(60480);
             response.addCookie(cookie);
-            return "done";
+            response.sendRedirect("/");
         }
 
         return "wrong";

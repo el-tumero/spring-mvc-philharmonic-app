@@ -18,12 +18,17 @@ public class UserDao {
     @Autowired
     UserRepository userRepository;
 
-    public UserDetails findUserByEmail(String email) {
-
+    public User findUserEntityByEmail(String email){
         User user = new User();
         user.setEmail(email);
         Example<User> example = Example.of(user);
         User result = userRepository.findOne(example).orElseThrow(() -> new UsernameNotFoundException("No user was found"));
+        return result;
+    }
+
+    public UserDetails findUserByEmail(String email) {
+
+        final User result = findUserEntityByEmail(email);
 
         return new org.springframework.security.core.userdetails.User(result.getEmail(), result.getPassword(), Collections.singleton(new SimpleGrantedAuthority(result.getRole())));
     }
