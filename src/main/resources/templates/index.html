@@ -3,7 +3,7 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Welcome Page</title>
+    <title>Filharmonia Narodowa</title>
 </head>
 <body>
 <div th:replace="fragments :: title"></div>
@@ -17,8 +17,15 @@
     <input type="submit" value="Log out">
 </form>
 
-<h2>Nadcho</h2>
-<p th:text="${concerts.get(0).getName()}"></p>
+<h2>Nadchodzące wydarzenia:</h2>
+<div>
+    <tr th:each="concert: ${concerts}">
+        <h3 th:text="${concert.getName()}"></h3>
+        <h4 th:text="${concert.getDate().toString()}"></h4>
+        <p th:text="${concert.getDescription()}"></p>
+    </tr>
+</div>
+
 
 </body>
 </html>
