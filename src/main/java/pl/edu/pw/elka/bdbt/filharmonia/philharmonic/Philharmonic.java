@@ -1,9 +1,12 @@
 package pl.edu.pw.elka.bdbt.filharmonia.philharmonic;
 
 import pl.edu.pw.elka.bdbt.filharmonia.User;
+import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -29,12 +32,18 @@ public class Philharmonic {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
+    private String address;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User owner;
 
     @Column(nullable = true)
     private Date creationDate;
+
+    @OneToMany(mappedBy = "philharmonic")
+    private List<Concert> concerts;
 
     public Philharmonic(){}
 
@@ -52,5 +61,9 @@ public class Philharmonic {
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public List<Concert> getConcerts() {
+        return concerts;
     }
 }

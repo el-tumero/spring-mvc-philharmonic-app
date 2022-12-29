@@ -48,6 +48,10 @@ public class Application {
 
 		model.addAttribute("philharmonic", philharmonic.get());
 
+		model.addAttribute("concerts", philharmonic.get().getConcerts());
+
+//		philharmonic.get().getConcerts().get(0);
+
 //		philharmonic.get().getOwner().getFirstName()
 		if(ctx.getName().equals("anonymousUser")){
 			model.addAttribute("user", null);
