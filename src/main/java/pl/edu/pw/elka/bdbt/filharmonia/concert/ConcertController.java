@@ -24,4 +24,14 @@ public class ConcertController {
         return "concert";
     }
 
+    @GetMapping("/{id}/tickets")
+    public String buyTicketsPage(@PathVariable String id, Model model){
+        Long idLong = Long.valueOf(id);
+        Optional<Concert> concert = concertRepository.findById(idLong);
+        model.addAttribute("concert", concert.get());
+        model.addAttribute("tickets", concert.get().getTickets());
+
+        return "buytickets";
+    }
+
 }

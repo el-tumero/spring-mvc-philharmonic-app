@@ -1,11 +1,13 @@
 package pl.edu.pw.elka.bdbt.filharmonia.concert;
 
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
+import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(
@@ -47,6 +49,9 @@ public class Concert {
     @JoinColumn(name = "philharmonic_id", referencedColumnName = "id", nullable = false)
     private Philharmonic philharmonic;
 
+    @OneToMany(mappedBy = "concert")
+    private List<Ticket> tickets;
+
     public Concert() {}
 
     public Long getId() {
@@ -81,5 +86,9 @@ public class Concert {
 
     public Philharmonic getPhilharmonic() {
         return philharmonic;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 }

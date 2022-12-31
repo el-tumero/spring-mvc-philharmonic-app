@@ -15,7 +15,7 @@
     <p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>
     <h3>Wykonawcy: </h3>
     <p>Niebawem...</p>
-    <a href="#">Kup bilet</a>
+    <a th:href="@{/concert/{id}/tickets(id=${concert.getId()})}">Kup bilet</a>
 </div>
 </body>
 </html>

@@ -1,7 +1,12 @@
 package pl.edu.pw.elka.bdbt.filharmonia;
 
+import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
+import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
+import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(
@@ -48,6 +53,9 @@ public class User {
     @Column(nullable = true)
     private Date birthdate;
 
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
+
     public User(){}
 
     public Long getId() {
@@ -78,6 +86,10 @@ public class User {
 
     public Date getBirthdate() {
         return birthdate;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
     public void setId(Long id) {

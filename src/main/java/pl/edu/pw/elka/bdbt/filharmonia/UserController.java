@@ -8,6 +8,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,15 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @GetMapping("/tickets")
+    public String tickets(Model model){
+        Authentication ctx = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDao.findUserEntityByEmail(ctx.getName());
+
+        model.addAttribute("tickets", user.getTickets());
+//        user.getTickets().get(0).
+        return "tickets";
+    }
 
     @GetMapping("/register")
     public String register(Model model){
