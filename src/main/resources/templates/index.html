@@ -21,8 +21,8 @@
 <div>
     <tr th:each="concert: ${concerts}">
         <h3 th:text="${concert.getName()}"></h3>
-        <h4 th:text="${concert.getDate().toString()}"></h4>
-        <p th:text="${concert.getDescription()}"></p>
+        <h4 th:text="${concert.getDateString()}"></h4>
+        <a th:href="@{/concert/{id}(id=${concert.getId()})}">Więcej informacji</a>
     </tr>
 </div>
 

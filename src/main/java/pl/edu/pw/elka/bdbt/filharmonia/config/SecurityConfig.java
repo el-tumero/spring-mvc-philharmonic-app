@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasRole("USER")
                 .antMatchers("/").permitAll()
+                .antMatchers("/concert/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/user/**").permitAll()

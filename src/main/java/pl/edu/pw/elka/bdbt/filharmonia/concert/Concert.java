@@ -3,6 +3,8 @@ package pl.edu.pw.elka.bdbt.filharmonia.concert;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -57,6 +59,12 @@ public class Concert {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getDateString(){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String strDate = dateFormat.format(date);
+        return strDate;
     }
 
     public String getType() {
