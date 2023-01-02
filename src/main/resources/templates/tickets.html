@@ -12,6 +12,9 @@
   <h3 th:text="${ticket.getConcert().getName()}"></h3>
   <p th:text="${ticket.getConcert().getDateString()}"></p>
   <p th:text="${ticket.getSeatId()}"></p>
+    <form th:action="@{/ticket/cancel/{id}(id=${ticket.getId()})}" method="post">
+        <input type="submit" value="Zrezygnuj">
+    </form>
 </tr>
 
 </body>

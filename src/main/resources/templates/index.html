@@ -13,9 +13,13 @@
 <p th:text="'Właścicel: ' + ${philharmonic.getOwner().getFirstName()} + ' ' + ${philharmonic.getOwner().getLastName()}"></p>
 <a href="/user/login">Login</a>
 <a href="/user/register">Register</a>
+
+<a th:if="${user}" href="/user/tickets">Twoje bilety</a>
 <form th:if="${user}" th:action="@{/user/logout}" method="post">
     <input type="submit" value="Log out">
 </form>
+
+
 
 <h2>Nadchodzące wydarzenia:</h2>
 <div>
