@@ -18,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
+import pl.edu.pw.elka.bdbt.filharmonia.employee.Employee;
+import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.Musician;
+import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.MusicianRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.PhilharmonicRepository;
 
@@ -32,6 +35,9 @@ public class Application {
 
 	@Autowired
 	UserDao userDao;
+
+	@Autowired
+	MusicianRepository musicianRepository;
 
 	@Autowired
 	PhilharmonicRepository philharmonicRepository;
@@ -63,13 +69,26 @@ public class Application {
 		return "index";
 	}
 
-	@GetMapping("/admin")
-	public String admin() {
-		return "admin";
-	}
+//	@GetMapping("/admin")
+//	public String admin() {
+//
+//		User user = userDao.findUserEntityByEmail("jan");
+//		Musician m = new Musician();
+//		m.setEducation("high");
+//		m.setGender("male");
+//		m.setIban("30109024025234614273875175");
+//		m.setPesel("89081152495");
+//		m.setUser(user);
+//
+//		musicianRepository.save(m);
+//
+//		return "admin";
+//	}
 
 	@GetMapping("/user")
 	public String user() {
 		return "user";
 	}
+
+
 }

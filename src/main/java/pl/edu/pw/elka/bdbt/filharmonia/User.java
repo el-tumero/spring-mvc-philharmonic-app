@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.bdbt.filharmonia;
 
 import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
+import pl.edu.pw.elka.bdbt.filharmonia.employee.Employee;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
@@ -56,6 +57,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
     public User(){}
 
     public Long getId() {
@@ -91,6 +95,8 @@ public class User {
     public List<Ticket> getTickets() {
         return tickets;
     }
+
+    public Employee getEmployee() { return employee; }
 
     public void setId(Long id) {
         this.id = id;
