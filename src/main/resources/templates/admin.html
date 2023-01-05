@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
 </head>
 <body>
-Hello admin!
+
+<div>
+    <a href="/admin/hire">Zatrudnij pracownika</a>
+    <p th:if="${musicians.empty}"> Brak zatrudnionych pracowników.</p>
+    <h3>Muzycy</h3>
+    <table th:if="${!musicians.empty}">
+        <tr>
+            <th>Email</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Data urodzenia</th>
+            <th>Płeć</th>
+            <th>Numer telefonu</th>
+            <th>PESEL</th>
+            <th>IBAN</th>
+            <th>Wykształcenie</th>
+            <th>Specjalizacja</th>
+        </tr>
+
+        <tr th:each="musician: ${musicians}">
+            <td th:text="${musician.getUser().getEmail()}" />
+            <td th:text="${musician.getUser().getFirstName()}" />
+            <td th:text="${musician.getUser().getLastName()}" />
+            <td th:text="${musician.getUser().getBirthdate()}" />
+            <td th:text="${musician.getGender()}" />
+            <td th:text="${musician.getUser().getPhoneNumber()}" />
+            <td th:text="${musician.getPesel()}" />
+            <td th:text="${musician.getIban()}" />
+            <td th:text="${musician.getEducation()}" />
+            <td th:text="${musician.getSpecialization()}" />
+        </tr>
+    </table>
+<!--    <p th:text="${musicians.get(0).getUser().getEmail()}"></p>-->
+</div>
+
 </body>
 </html>

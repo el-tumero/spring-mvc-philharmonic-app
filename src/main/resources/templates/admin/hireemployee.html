@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel zatrudniania</title>
+</head>
+<body>
+<form action="#" th:action="@{/admin/hire}" method="post">
+    <input type="text" placeholder="Email" th:field="${user.email}">
+    <input type="text" placeholder="Imię" th:field="${user.firstName}">
+    <input type="text" placeholder="Nazwisko" th:field="${user.lastName}">
+    <input type="date" th:field="${user.birthdate}">
+    <input type="text" placeholder="Numer telefonu" th:field="${user.phoneNumber}">
+    <input type="text" placeholder="Hasło" th:field="${user.password}">
+    <p>Pracownik:</p>
+    <input type="text" placeholder="Płeć" th:field="${musician.gender}">
+    <input type="text" placeholder="Iban" th:field="${musician.iban}">
+    <input type="text" placeholder="Pesel" th:field="${musician.pesel}">
+    <p>Muzyk:</p>
+    <input type="text" placeholder="Wykształcenie" th:field="${musician.education}">
+    <input type="text" placeholder="Specjalizacja" th:field="${musician.specialization}">
+
+    <input type="submit" value="Załóż konto pracownika">
+</form>
+</body>
+</html>

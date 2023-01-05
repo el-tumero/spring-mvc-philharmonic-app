@@ -69,21 +69,6 @@ public class Application {
 		return "index";
 	}
 
-//	@GetMapping("/admin")
-//	public String admin() {
-//
-//		User user = userDao.findUserEntityByEmail("jan");
-//		Musician m = new Musician();
-//		m.setEducation("high");
-//		m.setGender("male");
-//		m.setIban("30109024025234614273875175");
-//		m.setPesel("89081152495");
-//		m.setUser(user);
-//
-//		musicianRepository.save(m);
-//
-//		return "admin";
-//	}
 
 	@GetMapping("/user")
 	public String user() {
