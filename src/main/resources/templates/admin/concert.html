@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${concert.getName()}"></title>
+</head>
+<body>
+<h1 th:text="${concert.getName()}"></h1>
+<h3 th:text="${concert.getDateString()}"></h3>
+<p th:text="${concert.getDescription()}"></p>
+<p th:text="'Typ: ' + ${concert.getType()}"></p>
+<p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>
+<h3>Wykonawcy</h3>
+<table th:if="${!concert.getMusicians().empty}">
+    <tr>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Specjalizacja</th>
+        <th>Działania</th>
+    </tr>
+    <tr th:each="musician: ${concert.getMusicians()}">
+        <td th:text="${musician.getUser().getFirstName()}"></td>
+        <td th:text="${musician.getUser().getLastName()}"></td>
+        <td th:text="${musician.getSpecialization()}"></td>
+        <td>
+            <form th:action="@{/admin/concert/{id}/remove/{musicianId}(id = ${concert.getId()}, musicianId = ${musician.getId()})}" method="post">
+                <input type="submit" value="Usuń">
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h3>Dodaj</h3>
+<table th:if="${!musicians.empty}">
+    <tr>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Specjalizacja</th>
+        <th>Działania</th>
+    </tr>
+    <tr th:each="musician: ${musicians}">
+        <td th:text="${musician.getUser().getFirstName()}"></td>
+        <td th:text="${musician.getUser().getLastName()}"></td>
+        <td th:text="${musician.getSpecialization()}"></td>
+        <td>
+            <form th:action="@{/admin/concert/{id}/add/{musicianId}(id = ${concert.getId()}, musicianId = ${musician.getId()})}" method="post">
+                <small th:if="${!musician.isAvailable(concert.getDate())}">ZAJĘTY/ZAJĘTA</small>
+                <input th:if="${musician.isAvailable(concert.getDate())}"type="submit" value="Add">
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>

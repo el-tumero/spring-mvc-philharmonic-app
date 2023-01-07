@@ -10,6 +10,7 @@
 
 <div>
     <a href="/admin/hire">Zatrudnij pracownika</a>
+    <a href="/admin/concert/create">Stwórz koncert</a>
     <p th:if="${musicians.empty}"> Brak zatrudnionych pracowników.</p>
     <h3>Muzycy</h3>
     <table th:if="${!musicians.empty}">
@@ -24,6 +25,7 @@
             <th>IBAN</th>
             <th>Wykształcenie</th>
             <th>Specjalizacja</th>
+            <th>Działania</th>
         </tr>
 
         <tr th:each="musician: ${musicians}">
@@ -37,9 +39,32 @@
             <td th:text="${musician.getIban()}" />
             <td th:text="${musician.getEducation()}" />
             <td th:text="${musician.getSpecialization()}" />
+            <td>brak</td>
+<!--            <td> <a th:href="@{/admin/addtoconcert/{id}(id=${musician.getId()})}">Przypisz do koncertu</a></td>-->
+        </tr>
+<!--        <a th:href="@{/concert/{id}/tickets(id=${concert.getId()})}">Kup bilet</a>-->
+    </table>
+
+    <h3>Koncerty</h3>
+    <table th:if="${!concerts.empty}">
+        <tr>
+            <th>Nazwa</th>
+            <th>Data</th>
+            <th>Typ</th>
+            <th>Czas trwania</th>
+            <th>Działania</th>
+        </tr>
+        <tr th:each="concert: ${concerts}">
+            <td th:text="${concert.getName()}"></td>
+            <td th:text="${concert.getDateString()}"></td>
+            <td th:text="${concert.getType()}"></td>
+            <td th:text="${concert.getDuration().toString()}"></td>
+            <td><a th:href="@{/admin/concert/{id}(id = ${concert.getId()})}">Więcej</a></td>
         </tr>
     </table>
-<!--    <p th:text="${musicians.get(0).getUser().getEmail()}"></p>-->
+
+
+
 </div>
 
 </body>

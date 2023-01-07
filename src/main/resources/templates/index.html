@@ -14,7 +14,11 @@
 <a href="/user/login">Login</a>
 <a href="/user/register">Register</a>
 
-<a th:if="${user}" href="/user/tickets">Twoje bilety</a>
+<div th:if="${user}">
+    <a href="/user/tickets">Twoje bilety</a>
+    <a th:if="${user.getRole() == 'ROLE_ADMIN'}" href="/admin">Admin panel</a>
+</div>
+
 <form th:if="${user}" th:action="@{/user/logout}" method="post">
     <input type="submit" value="Log out">
 </form>

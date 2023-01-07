@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Stwórz koncert</title>
+</head>
+<body>
+<form action="#" th:action="@{/admin/concert/create}" method="post">
+<!--  <input type="number" th:field="${concert.id}">-->
+  <input type="text" placeholder="Nazwa" th:field="${concert.name}">
+  <input type="date" th:field="${concert.date}">
+  <input type="text" placeholder="Typ" th:field="${concert.type}">
+  <input type="text" placeholder="Opis" th:field="${concert.description}">
+  <input type="number" th:field="${concert.duration}">
+  <input type="submit" value="Stwórz koncert!">
+</form>
+
+</body>
+</html>
