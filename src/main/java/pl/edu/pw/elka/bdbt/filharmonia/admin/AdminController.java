@@ -86,6 +86,14 @@ public class AdminController {
         response.sendRedirect("/admin");
     }
 
+    @PostMapping("/concert/delete/{id}")
+    public void removeConcert(@PathVariable String id, HttpServletResponse response) throws IOException{
+        Long concertId = Long.valueOf(id);
+        Concert concert = concertRepository.findById(concertId).get();
+        concertRepository.delete(concert);
+        response.sendRedirect("/admin");
+    }
+
     @PostMapping("/concert/{id}/add/{musicianId}")
     public void addMusicianToConcert(@PathVariable String id, @PathVariable String musicianId, HttpServletResponse response) throws IOException {
         Long concertId = Long.valueOf(id);

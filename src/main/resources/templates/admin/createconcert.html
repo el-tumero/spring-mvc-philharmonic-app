@@ -10,7 +10,7 @@
 <form action="#" th:action="@{/admin/concert/create}" method="post">
 <!--  <input type="number" th:field="${concert.id}">-->
   <input type="text" placeholder="Nazwa" th:field="${concert.name}">
-  <input type="date" th:field="${concert.date}">
+  <input type="datetime-local" th:field="${concert.date}">
   <input type="text" placeholder="Typ" th:field="${concert.type}">
   <input type="text" placeholder="Opis" th:field="${concert.description}">
   <input type="number" th:field="${concert.duration}">
@@ -18,4 +18,5 @@
 </form>
 
 </body>
+
 </html>

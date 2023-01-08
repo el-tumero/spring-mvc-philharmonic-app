@@ -5,6 +5,8 @@ import pl.edu.pw.elka.bdbt.filharmonia.employee.Employee;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +43,9 @@ public class Musician extends Employee {
         this.specialization = specialization;
     }
 
-    public boolean isAvailable(Date date){
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-        List<Concert> concertsInSameDate = this.concerts.stream().filter(concert -> fmt.format(concert.getDate()).equals(fmt.format(date))).collect(Collectors.toList());
+    public boolean isAvailable(LocalDateTime date){
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<Concert> concertsInSameDate = this.concerts.stream().filter(concert -> concert.getDate().format(fmt).equals(date.format(fmt))).collect(Collectors.toList());
         return concertsInSameDate.size() == 0;
     }
 

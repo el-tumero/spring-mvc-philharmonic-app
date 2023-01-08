@@ -1,13 +1,14 @@
 package pl.edu.pw.elka.bdbt.filharmonia.concert;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.Musician;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
 import javax.persistence.*;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,8 +37,9 @@ public class Concert {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Date date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP") // in ORACLE CAN BE DIFFRENT
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String type;
@@ -73,13 +75,13 @@ public class Concert {
         return name;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDate() {
+        return this.date;
     }
 
     public String getDateString(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String strDate = dateFormat.format(date);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String strDate = this.date.format(fmt);
         return strDate;
     }
 
@@ -111,9 +113,7 @@ public class Concert {
         this.name = name;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public void setDate(LocalDateTime date) {this.date = date; }
 
     public void setType(String type) {
         this.type = type;
