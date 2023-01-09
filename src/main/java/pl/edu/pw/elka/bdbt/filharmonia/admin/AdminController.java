@@ -16,10 +16,13 @@ import pl.edu.pw.elka.bdbt.filharmonia.hall.Hall;
 import pl.edu.pw.elka.bdbt.filharmonia.hall.HallRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.PhilharmonicRepository;
+import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
+import pl.edu.pw.elka.bdbt.filharmonia.ticket.TicketRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,9 @@ public class AdminController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TicketRepository ticketRepository;
 
     @Autowired
     HallRepository hallRepository;
@@ -150,36 +156,45 @@ public class AdminController {
         response.sendRedirect("/admin/concert/" + id);
     }
 
-//    @GetMapping("/addtoconcert/{id}")
-//    public String musicianConcertPanel(@PathVariable String id, Model model){
-//        Long idLong = Long.valueOf(id);
-//        Optional<Musician> musician = musicianRepository.findById(idLong);
-//
-//        model.addAttribute("musician", musician.get());
-//
-//        model.addAttribute("concerts", concertRepository.findAll());
-////        model.addAttribute("test", id);
-//        return "admin/musicianconcert";
-//    }
-//
-//    @PostMapping("/addtoconcert/{id}/{musicianId}")
-//    public void addToConcert(@PathVariable String id, @PathVariable String musicianId, HttpServletResponse response) throws IOException {
-//        Long concertId = Long.valueOf(id);
-//        Long longMusicianId = Long.valueOf(musicianId);
-//
-//        Optional<Concert> concert = concertRepository.findById(concertId);
-//        Optional<Musician> musician = musicianRepository.findById(longMusicianId);
-//
-//        List<Concert> concerts = musician.get().getConcerts();
-//
-//        concerts.add(concert.get());
-//
-//        musicianRepository.save(musician.get());
-//
-//        response.sendRedirect("/admin");
-//
-//
-//
-//    }
+    @PostMapping("/concert/{id}/tickets/start")
+    public void startTicketSale(@PathVariable String id, HttpServletResponse response) throws IOException {
+        Long concertId = Long.valueOf(id);
+        Concert concert = concertRepository.findById(concertId).get();
+        if(!concert.getTickets().isEmpty()) {
+            response.sendError(400);
+            return;
+        }
+        int hallCapacity = concert.getHall().getCapacity();
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+        int placesPerRow = 10;
+        for (int i = 0; i < hallCapacity; i++) {
+            int x = i % placesPerRow;
+            int y = i / placesPerRow;
+            Ticket ticket = new Ticket();
+            ticket.setConcert(concert);
+            ticket.setPrice(20);
+            ticket.setSeatId(alphabet[y] + "" + x);
+            ticketRepository.save(ticket);
+        }
+
+        response.sendRedirect("/admin/concert/" + id);
+    }
+
+    @PostMapping("/concert/{id}/tickets/delete")
+    public void deleteTickets(@PathVariable String id, HttpServletResponse response) throws IOException{
+        Long concertId = Long.valueOf(id);
+        Concert concert = concertRepository.findById(concertId).get();
+        if(concert.getTickets().isEmpty()) {
+            response.sendError(400);
+            return;
+        }
+        List<Ticket> tickets = concert.getTickets();
+
+        tickets.forEach(ticket -> {
+            ticketRepository.delete(ticket);
+        });
+
+        response.sendRedirect("/admin/concert/" + id);
+    }
 
 }

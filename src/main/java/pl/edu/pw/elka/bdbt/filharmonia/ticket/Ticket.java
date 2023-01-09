@@ -63,4 +63,16 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setSeatId(String seatId) {
+        this.seatId = seatId;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setConcert(Concert concert) {
+        this.concert = concert;
+    }
 }
