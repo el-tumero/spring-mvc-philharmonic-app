@@ -52,6 +52,7 @@
             <th>Data</th>
             <th>Typ</th>
             <th>Czas trwania</th>
+            <th>Sala</th>
             <th>Działania</th>
         </tr>
         <tr th:each="concert: ${concerts}">
@@ -59,6 +60,7 @@
             <td th:text="${concert.getDateString()}"></td>
             <td th:text="${concert.getType()}"></td>
             <td th:text="${concert.getDuration().toString()}"></td>
+            <td th:text="${concert.getHall().getName()}"></td>
             <td><a th:href="@{/admin/concert/{id}(id = ${concert.getId()})}">Więcej</a></td>
         </tr>
     </table>

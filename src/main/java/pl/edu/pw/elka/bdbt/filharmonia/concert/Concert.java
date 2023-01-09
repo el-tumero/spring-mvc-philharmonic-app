@@ -2,6 +2,7 @@ package pl.edu.pw.elka.bdbt.filharmonia.concert;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.Musician;
+import pl.edu.pw.elka.bdbt.filharmonia.hall.Hall;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
@@ -22,15 +23,7 @@ import java.util.Set;
 )
 public class Concert {
     @Id
-    @SequenceGenerator(
-            name="concert_sequence",
-            sequenceName = "concert_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "concert_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
 
@@ -38,7 +31,7 @@ public class Concert {
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Column(nullable = false, columnDefinition = "TIMESTAMP") // in ORACLE CAN BE DIFFRENT
+    @Column(nullable = false, columnDefinition = "TIMESTAMP") // in ORACLE CAN BE DIFFERENT
     private LocalDateTime date;
 
     @Column(nullable = false)
@@ -53,6 +46,10 @@ public class Concert {
     @ManyToOne
     @JoinColumn(name = "philharmonic_id", referencedColumnName = "id", nullable = false)
     private Philharmonic philharmonic;
+
+    @ManyToOne
+    @JoinColumn(name = "hall_id", referencedColumnName = "id", nullable = false)
+    private Hall hall;
 
     @OneToMany(mappedBy = "concert")
     private List<Ticket> tickets;
@@ -113,6 +110,14 @@ public class Concert {
         this.name = name;
     }
 
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
+
     public void setDate(LocalDateTime date) {this.date = date; }
 
     public void setType(String type) {
@@ -129,5 +134,9 @@ public class Concert {
 
     public void setPhilharmonic(Philharmonic philharmonic) {
         this.philharmonic = philharmonic;
+    }
+
+    public void setMusicians(Set<Musician> musicians) {
+        this.musicians = musicians;
     }
 }

@@ -2,6 +2,7 @@ package pl.edu.pw.elka.bdbt.filharmonia.philharmonic;
 
 import pl.edu.pw.elka.bdbt.filharmonia.User;
 import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
+import pl.edu.pw.elka.bdbt.filharmonia.hall.Hall;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,6 +42,9 @@ public class Philharmonic {
 
     @Column(nullable = true)
     private Date creationDate;
+
+    @OneToMany(mappedBy = "philharmonic")
+    private List<Hall> halls;
 
     @OneToMany(mappedBy = "philharmonic")
     private List<Concert> concerts;

@@ -13,6 +13,7 @@
     <p th:text="${concert.getDescription()}"></p>
     <p th:text="'Typ: ' + ${concert.getType()}"></p>
     <p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>
+    <p th:text="'Sala ' + ${concert.getHall().getName()}"></p>
     <h3>Wykonawcy: </h3>
     <tr th:each="musician: ${concert.getMusicians()}">
         <p th:text="${musician.getUser().getFirstName()} + ' ' + ${musician.getUser().getLastName()} + ' - ' + ${musician.getSpecialization()}"></p>

@@ -7,12 +7,20 @@
     <title th:text="${concert.getName()}"></title>
 </head>
 <body>
-<h1 th:text="${concert.getName()}"></h1>
-<h3 th:text="${concert.getDateString()}"></h3>
-<p th:text="${concert.getDescription()}"></p>
-<p th:text="'Typ: ' + ${concert.getType()}"></p>
-<p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>
+<h2 th:text="'Edycja: ' + ${concert.getName()}"></h2>
+<select name="selection" id="selection" form="form">
+    <option th:each="hall: ${halls}" th:value="${hall.getId()}" th:text="${hall.getName()}" th:selected="${concert.getHall().getId() == hall.getId()}"></option>
+</select>
+<form th:action="@{/admin/concert/edit/{id}(id = ${concert.getId()})}" id="form" method="post">
+    <input type="datetime-local" th:value="${concert.getDate().toString()}" th:field="${concert.date}">
+    <input placeholder="Nazwa" type="text" th:value="${concert.getName()}" th:field="${concert.name}">
+    <input placeholder="Opis" th:value="${concert.getDescription()}" th:field="${concert.description}">
+    <input placeholder="Typ" th:value="${concert.getType()} "type="text" th:field="${concert.type}">
+    <input type="number" th:value="${concert.getDuration()}" th:field="${concert.duration}">
+    <input type="submit" value="Zapisz zmiany">
+</form>
 <h3>Wykonawcy</h3>
+<p th:if="${concert.getMusicians().empty}">Żaden muzyk nie został jeszcze dodany do wydarzenia</p>
 <table th:if="${!concert.getMusicians().empty}">
     <tr>
         <th>Imię</th>
@@ -46,7 +54,10 @@
         <td th:text="${musician.getSpecialization()}"></td>
         <td>
             <form th:action="@{/admin/concert/{id}/add/{musicianId}(id = ${concert.getId()}, musicianId = ${musician.getId()})}" method="post">
-                <small th:if="${!musician.isAvailable(concert.getDate())}">ZAJĘTY/ZAJĘTA</small>
+                <div th:if="${!musician.isAvailable(concert.getDate())}">
+                    <small th:if="${musician.getGender().equals('kobieta')}">Zajęta!</small>
+                    <small th:if="${musician.getGender().equals('mężczyzna')}">Zajęty!</small>
+                </div>
                 <input th:if="${musician.isAvailable(concert.getDate())}"type="submit" value="Add">
             </form>
         </td>

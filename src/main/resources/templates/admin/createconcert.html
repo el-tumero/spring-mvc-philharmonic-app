@@ -7,7 +7,11 @@
     <title>Stwórz koncert</title>
 </head>
 <body>
-<form action="#" th:action="@{/admin/concert/create}" method="post">
+
+<select name="selection" id="selection" form="form">
+    <option th:each="hall: ${halls}" th:value="${hall.getId()}" th:text="${hall.getName()}"></option>
+</select>
+<form action="#" th:action="@{/admin/concert/create}"id="form" method="post">
 <!--  <input type="number" th:field="${concert.id}">-->
   <input type="text" placeholder="Nazwa" th:field="${concert.name}">
   <input type="datetime-local" th:field="${concert.date}">
@@ -16,6 +20,8 @@
   <input type="number" th:field="${concert.duration}">
   <input type="submit" value="Stwórz koncert!">
 </form>
+
+
 
 </body>
 

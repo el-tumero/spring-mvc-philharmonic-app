@@ -12,6 +12,8 @@ import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.EmployeeRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.Musician;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.MusicianRepository;
+import pl.edu.pw.elka.bdbt.filharmonia.hall.Hall;
+import pl.edu.pw.elka.bdbt.filharmonia.hall.HallRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
 import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.PhilharmonicRepository;
 
@@ -30,6 +32,9 @@ public class AdminController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    HallRepository hallRepository;
 
     @Autowired
     ConcertRepository concertRepository;
@@ -67,6 +72,7 @@ public class AdminController {
     public String concert(@PathVariable String id, Model model){
         Long idLong = Long.valueOf(id);
         Concert concert = concertRepository.findById(idLong).get();
+        model.addAttribute("halls", hallRepository.findAll());
         model.addAttribute("concert", concert);
         model.addAttribute("musicians", musicianRepository.findAll());
         return "admin/concert";
@@ -74,16 +80,42 @@ public class AdminController {
 
     @GetMapping("/concert/create")
     public String createConcertPanel(Model model) {
+        model.addAttribute("halls", hallRepository.findAll());
         model.addAttribute("concert", new Concert());
         return "admin/createconcert";
     }
 
     @PostMapping("/concert/create")
-    public void createConcertAction(@ModelAttribute Concert concert, HttpServletResponse response) throws IOException {
+    public void createConcertAction(@ModelAttribute Concert concert, @RequestParam(value = "selection") String selection, HttpServletResponse response) throws IOException {
         Philharmonic philharmonic = philharmonicRepository.findById(Long.valueOf("1")).get();
+        Hall hall = hallRepository.findById(Long.valueOf(selection)).get();
         concert.setPhilharmonic(philharmonic);
+        concert.setHall(hall);
         concertRepository.save(concert);
         response.sendRedirect("/admin");
+    }
+
+    @PostMapping("/concert/edit/{id}")
+    public void editConcertAction(@ModelAttribute Concert updatedConcert, @RequestParam(value = "selection") String selection, @PathVariable String id, HttpServletResponse response) throws IOException {
+        Concert concert = concertRepository.findById(Long.valueOf(id)).get();
+        Hall hall = hallRepository.findById(Long.valueOf(selection)).get();
+
+        if(!updatedConcert.getDate().equals(concert.getDate())){
+            concert.setMusicians(null);
+        }
+
+        concert.setName(updatedConcert.getName());
+        concert.setDescription(updatedConcert.getDescription());
+        concert.setType(updatedConcert.getType());
+        concert.setDuration(updatedConcert.getDuration());
+        concert.setDate(updatedConcert.getDate());
+        concert.setHall(hall);
+
+
+
+        concertRepository.save(concert);
+
+        response.sendRedirect("/admin/concert/" + id);
     }
 
     @PostMapping("/concert/delete/{id}")
