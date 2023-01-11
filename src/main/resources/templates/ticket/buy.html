@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      th:replace="fragments/layout :: layout('Wybierz miejsce', ~{::link}, ~{::section})"
+>
 <head>
-    <meta charset="UTF-8">
-    <title>Kup bilety</title>
+    <link rel="stylesheet" th:href="@{/css/ticket/buy.css}">
 </head>
 <body>
-<h1>Kup bilety:</h1>
-<h2 th:text="${concert.getName()}"></h2>
-
-<h3>Miejsca:</h3>
-<tr th:each="ticket: ${tickets}">
-    <div>
-        <td th:text="'Miejsce: ' + ${ticket.getSeatId()}"></td>
-        <td th:text="'Cena: ' + ${ticket.getPrice().toString()} + ' PLN'"></td>
-        <td th:text="${ticket.getUser()} ? 'ZAJĘTE' : 'DOSTĘPNE'"></td>
-        <form th:action="@{/ticket/buy/{id}(id=${ticket.getId()})}" method="post">
-            <input type="submit" value="Kup!">
+<section>
+    <script th:src="@{/js/ticket/buy.js}" defer></script>
+    <div id="buyPanel">
+        <p id="concertTitle" th:text="${concert.getName()}"></p>
+        <p th:text="${concert.getDateString()}"></p>
+        <p th:text="'Sala ' + ${concert.getHall().getName()}">Sala kameralna</p>
+        <div id="legend" style="display: inline;">
+            <p><span style="color: rgb(57, 57, 198); font-size: large;">●</span> - miejsce wolne</p>
+            <p><span style="color: rgb(124, 182, 37); font-size: large;">●</span> - miejsce wybrane</p>
+            <p><span style="color: rgb(128, 128, 128); font-size: large;">●</span> - miejsce zajęte</p>
+        </div>
+        <p id="chosenPlace">Nie wybrano zadnego miejsca</p>
+        <form id="buyForm" method="post">
+            <input type="submit" value="Kup" id="buyButton">
         </form>
     </div>
-</tr>
 
-
-
+    <div id="placeSelectorContainer">
+        <div id="scene">Scena</div>
+        <div id="placeSelector">
+            <div th:class="${ticket.getUser()} ? 'place taken' : 'place'" th:id="${ticket.getId()}" th:each="ticket: ${concert.getTickets()}" th:text="${ticket.getSeatId()}"></div>
+        </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

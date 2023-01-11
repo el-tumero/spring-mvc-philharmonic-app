@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,6 +32,8 @@ public class ConcertController {
         Long idLong = Long.valueOf(id);
         Optional<Concert> concert = concertRepository.findById(idLong);
         model.addAttribute("concert", concert.get());
+        concert.get().getTickets().sort(Comparator.comparing(Ticket::getId));
+
         model.addAttribute("tickets", concert.get().getTickets());
 
         return "ticket/buy";

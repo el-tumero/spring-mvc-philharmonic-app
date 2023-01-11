@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      th:fragment="layout(title, style, content)"
+>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:replace="${style}">
+    <title th:text="${title}"></title>
+</head>
+<div id="content">
+
+    <div id="navbar">
+        <div id="logo">Filharmonia Narodowa</div>
+        <div id="tabs">
+            <div class="tab"><a href="/">O nas</a></div>
+            <div class="tab"><a th:href="@{/user/tickets}">Twoje bilety</a></div>
+            <div class="tab"><a href="#">Wyloguj</a></div>
+        </div>
+    </div>
+    <div id="separator"></div>
+    <div id="title" th:text="${title}"></div>
+    <section th:replace="${content}">
+        <p>Layout contents</p>
+    </section>
+</div>
+
+</body>
+</html>
