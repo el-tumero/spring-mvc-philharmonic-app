@@ -1,40 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      th:replace="fragments/layout :: layout('Aktualności', ~{::link}, ~{::section})"
+>
 <head>
-    <title>Filharmonia Narodowa</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-<div th:replace="fragments :: title"></div>
-<p th:text="${user} ? 'Logged as ' + ${user.getEmail()} : '' "></p>
-<p>Informacje o filharmonii</p>
-<p th:text="${philharmonic.getName()}"></p>
-<p th:text="'Właścicel: ' + ${philharmonic.getOwner().getFirstName()} + ' ' + ${philharmonic.getOwner().getLastName()}"></p>
-<p th:text="${philharmonic.getAddress().getStreet()}"></p>
-<a href="/user/login">Login</a>
-<a href="/user/register">Register</a>
-
-<div th:if="${user}">
-    <a href="/user/tickets">Twoje bilety</a>
-    <a th:if="${user.getRole() == 'ROLE_ADMIN'}" href="/admin">Admin panel</a>
-</div>
-
-<form th:if="${user}" th:action="@{/user/logout}" method="post">
-    <input type="submit" value="Log out">
-</form>
-
-
-
-<h2>Nadchodzące wydarzenia:</h2>
-<div>
-    <tr th:each="concert: ${concerts}">
-        <h3 th:text="${concert.getName()}"></h3>
-        <h4 th:text="${concert.getDateString()}"></h4>
-        <a th:href="@{/concert/{id}(id=${concert.getId()})}">Więcej informacji</a>
-    </tr>
-</div>
-
+    <section>
+        <div id="concert" th:each="concert: ${concerts}">
+            <p th:text="${concert.getName()}"></p>
+            <p th:text="${concert.getDateString()}"></p>
+            <a th:href="@{/concert/{id}/tickets(id = ${concert.getId()})}">Kup bilet</a>
+        </div>
+    </section>
 
 </body>
 </html>

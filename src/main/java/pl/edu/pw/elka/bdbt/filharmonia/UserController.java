@@ -73,7 +73,7 @@ public class UserController {
         return "done";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public void logout(HttpServletResponse response) throws IOException {
         Cookie cookie = new Cookie("token", null);
         cookie.setPath("/");

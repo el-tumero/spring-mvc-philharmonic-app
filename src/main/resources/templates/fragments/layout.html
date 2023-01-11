@@ -16,9 +16,16 @@
     <div id="navbar">
         <div id="logo">Filharmonia Narodowa</div>
         <div id="tabs">
-            <div class="tab"><a href="/">O nas</a></div>
-            <div class="tab"><a th:href="@{/user/tickets}">Twoje bilety</a></div>
-            <div class="tab"><a href="#">Wyloguj</a></div>
+            <div class="tab"><a href="/">Aktualności</a></div>
+            <div class="tab" th:if="${user}"><a th:href="@{/user/tickets}">Twoje bilety</a></div>
+            <div th:if="${user}">
+                <div class="tab" th:if="${user.getRole().equals('ROLE_ADMIN')} "><a th:href="@{/admin}">Admin</a></div>
+            </div>
+            <div th:if="${user}">
+                <div class="tab"><small style="font-size: 10; font-weight: 100" th:text="${user.getEmail()}"></small></div>
+            </div>
+            <div class="tab" th:if="${user == null}"><a th:href="@{/user/login}">Zaloguj</a></div>
+            <div class="tab" th:if="${user}"><a th:href="@{/user/logout}">Wyloguj</a></div>
         </div>
     </div>
     <div id="separator"></div>

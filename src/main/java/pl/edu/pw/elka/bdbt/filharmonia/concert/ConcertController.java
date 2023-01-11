@@ -1,11 +1,16 @@
 package pl.edu.pw.elka.bdbt.filharmonia.concert;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.edu.pw.elka.bdbt.filharmonia.User;
+import pl.edu.pw.elka.bdbt.filharmonia.UserRepository;
+import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
 import pl.edu.pw.elka.bdbt.filharmonia.ticket.Ticket;
 
 import java.util.Comparator;
@@ -19,6 +24,9 @@ public class ConcertController {
     @Autowired
     ConcertRepository concertRepository;
 
+    @Autowired
+    UserDao userDao;
+
     @GetMapping("/{id}")
     public String concertPage(@PathVariable String id, Model model){
         Long idLong = Long.valueOf(id);
@@ -29,6 +37,11 @@ public class ConcertController {
 
     @GetMapping("/{id}/tickets")
     public String buyTicketsPage(@PathVariable String id, Model model){
+        Authentication ctx = SecurityContextHolder.getContext().getAuthentication();
+        final User user = userDao.findUserEntityByEmail(ctx.getName());
+        model.addAttribute("user", user);
+
+
         Long idLong = Long.valueOf(id);
         Optional<Concert> concert = concertRepository.findById(idLong);
         model.addAttribute("concert", concert.get());

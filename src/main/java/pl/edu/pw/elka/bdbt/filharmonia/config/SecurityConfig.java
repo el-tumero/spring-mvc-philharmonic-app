@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .antMatchers("/").permitAll()
                 .antMatchers("/concert/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/css/**").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/user/register").permitAll()
