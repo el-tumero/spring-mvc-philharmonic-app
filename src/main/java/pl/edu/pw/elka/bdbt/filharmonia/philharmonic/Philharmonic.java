@@ -1,6 +1,7 @@
 package pl.edu.pw.elka.bdbt.filharmonia.philharmonic;
 
 import pl.edu.pw.elka.bdbt.filharmonia.User;
+import pl.edu.pw.elka.bdbt.filharmonia.address.Address;
 import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
 import pl.edu.pw.elka.bdbt.filharmonia.hall.Hall;
 
@@ -18,15 +19,7 @@ import java.util.Set;
 )
 public class Philharmonic {
     @Id
-    @SequenceGenerator(
-            name="philharmonic_sequence",
-            sequenceName = "philharmonic_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "philharmonic_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
 
@@ -34,17 +27,21 @@ public class Philharmonic {
     private String name;
 
     @Column(nullable = true)
-    private String address;
+    private Date creationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User owner;
 
-    @Column(nullable = true)
-    private Date creationDate;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id", referencedColumnName = "id")
+    private Address address;
 
     @OneToMany(mappedBy = "philharmonic")
     private List<Hall> halls;
+
+    @OneToMany(mappedBy = "philharmonic")
+    private List<User> users;
 
     @OneToMany(mappedBy = "philharmonic")
     private List<Concert> concerts;
@@ -69,5 +66,9 @@ public class Philharmonic {
 
     public List<Concert> getConcerts() {
         return concerts;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

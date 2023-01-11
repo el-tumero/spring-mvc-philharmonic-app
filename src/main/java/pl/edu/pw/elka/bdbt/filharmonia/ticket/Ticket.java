@@ -12,15 +12,7 @@ import javax.persistence.*;
 )
 public class Ticket {
     @Id
-    @SequenceGenerator(
-            name="ticket_sequence",
-            sequenceName = "ticket_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "ticket_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
 

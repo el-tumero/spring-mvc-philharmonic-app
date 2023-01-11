@@ -11,6 +11,7 @@
 <p>Informacje o filharmonii</p>
 <p th:text="${philharmonic.getName()}"></p>
 <p th:text="'Właścicel: ' + ${philharmonic.getOwner().getFirstName()} + ' ' + ${philharmonic.getOwner().getLastName()}"></p>
+<p th:text="${philharmonic.getAddress().getStreet()}"></p>
 <a href="/user/login">Login</a>
 <a href="/user/register">Register</a>
 

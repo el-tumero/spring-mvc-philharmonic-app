@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.elka.bdbt.filharmonia.config.JwtUtils;
 import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
+import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.Philharmonic;
+import pl.edu.pw.elka.bdbt.filharmonia.philharmonic.PhilharmonicRepository;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PhilharmonicRepository philharmonicRepository;
 
     @GetMapping("/tickets")
     public String tickets(Model model){
@@ -59,7 +64,9 @@ public class UserController {
 
     @PostMapping("/register")
     public String createUser(@ModelAttribute User user, Model model) {
+        Philharmonic philharmonic = philharmonicRepository.findById(Long.valueOf("1")).get();
         user.setRole("ROLE_USER");
+        user.setPhilharmonic(philharmonic);
         userRepository.save(user);
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);

@@ -18,9 +18,15 @@
     <input type="text" placeholder="Płeć" th:field="${musician.gender}">
     <input type="text" placeholder="Iban" th:field="${musician.iban}">
     <input type="text" placeholder="Pesel" th:field="${musician.pesel}">
+    <input type="number" th:field="${musician.salary}">
     <p>Muzyk:</p>
     <input type="text" placeholder="Wykształcenie" th:field="${musician.education}">
     <input type="text" placeholder="Specjalizacja" th:field="${musician.specialization}">
+    <p>Address:</p>
+    <input type="text" placeholder="Miasto" th:field="${address.town}">
+    <input type="text" placeholder="Ulica" th:field="${address.street}">
+    <input type="text" placeholder="Numer mieszkania" th:field="${address.apartamentNumber}">
+    <input type="text" placeholder="Kod pocztowy" th:field="${address.postcode}">
 
     <input type="submit" value="Załóż konto pracownika">
 </form>

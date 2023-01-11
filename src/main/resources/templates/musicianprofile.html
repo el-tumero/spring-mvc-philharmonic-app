@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil muzyka</title>
+</head>
+<body>
+<h2 th:text="${musician.getUser().getFirstName()} + ' ' + ${musician.getUser().getLastName()}"></h2>
+<h3>Dane:</h3>
+<p th:text="${musician.getGender()}"></p>
+<p th:text="${musician.getUser().getEmail()}"></p>
+<p th:text="${musician.getUser().getPhoneNumber()}"></p>
+<p th:text="${musician.getUser().getBirthdate().toString()}"></p>
+<p th:text="${musician.getPesel()}"></p>
+<p th:text="${musician.getIban()}"></p>
+<p th:text="${musician.getSalary()}"></p>
+<p th:text="${musician.getAddress().getStreet()}"></p>
+<p th:text="${musician.getAddress().getTown()}"></p>
+<p th:text="${musician.getAddress().getPostcode()}"></p>
+<div th:if="${isAdmin}">
+    <h3>Edycja</h3>
+
+    <form action="#" th:action="@{/admin/edit/musician/{id}(id = ${musician.getId()})}" method="post">
+        <input type="text" placeholder="Email" th:field="${user.email}">
+        <input type="text" placeholder="Imię" th:field="${user.firstName}" >
+        <input type="text" placeholder="Nazwisko" th:field="${user.lastName}" >
+        <input type="date" th:field="${user.birthdate}">
+        <input type="text" placeholder="Numer telefonu" th:field="${user.phoneNumber}">
+        <input type="text" placeholder="Hasło" th:field="${user.password}">
+        <br>
+        <input type="text" placeholder="Płeć" th:field="${musician.gender}">
+        <input type="text" placeholder="Iban" th:field="${musician.iban}">
+        <input type="text" placeholder="Pesel" th:field="${musician.pesel}">
+        <input type="number" th:field="${musician.salary}">
+        <br>
+        <input type="text" placeholder="Wykształcenie" th:field="${musician.education}">
+        <input type="text" placeholder="Specjalizacja" th:field="${musician.specialization}">
+        <p>Address:</p>
+        <input type="text" placeholder="Miasto" th:field="${address.town}">
+        <input type="text" placeholder="Ulica" th:field="${address.street}">
+        <input type="text" placeholder="Numer mieszkania" th:field="${address.apartamentNumber}">
+        <input type="text" placeholder="Kod pocztowy" th:field="${address.postcode}">
+
+        <input type="submit" value="Wprowadź zmiany">
+    </form>
+
+
+</div>
+
+</body>
+</html>

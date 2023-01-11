@@ -20,15 +20,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @SequenceGenerator(
-            name="user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
 
@@ -59,6 +51,10 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "philharmonic_id", referencedColumnName = "id", nullable = false)
+    private Philharmonic philharmonic;
 
     public User(){}
 
@@ -126,5 +122,9 @@ public class User {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public void setPhilharmonic(Philharmonic philharmonic) {
+        this.philharmonic = philharmonic;
     }
 }

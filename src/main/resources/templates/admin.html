@@ -9,6 +9,7 @@
 <body>
 
 <div>
+    <a href="/">Strona główna</a>
     <a href="/admin/hire">Zatrudnij pracownika</a>
     <a href="/admin/concert/create">Stwórz koncert</a>
     <p th:if="${musicians.empty}"> Brak zatrudnionych pracowników.</p>
@@ -21,10 +22,8 @@
             <th>Data urodzenia</th>
             <th>Płeć</th>
             <th>Numer telefonu</th>
-            <th>PESEL</th>
-            <th>IBAN</th>
-            <th>Wykształcenie</th>
             <th>Specjalizacja</th>
+            <th>Wynagrodzenie</th>
             <th>Działania</th>
         </tr>
 
@@ -35,11 +34,9 @@
             <td th:text="${musician.getUser().getBirthdate()}" />
             <td th:text="${musician.getGender()}" />
             <td th:text="${musician.getUser().getPhoneNumber()}" />
-            <td th:text="${musician.getPesel()}" />
-            <td th:text="${musician.getIban()}" />
-            <td th:text="${musician.getEducation()}" />
             <td th:text="${musician.getSpecialization()}" />
-            <td>brak</td>
+            <td th:text="${musician.getSalary().toString()}"></td>
+            <td><a th:href="@{/musician/{id}(id = ${musician.getId()})}">Profil</a></td>
 <!--            <td> <a th:href="@{/admin/addtoconcert/{id}(id=${musician.getId()})}">Przypisz do koncertu</a></td>-->
         </tr>
 <!--        <a th:href="@{/concert/{id}/tickets(id=${concert.getId()})}">Kup bilet</a>-->

@@ -41,7 +41,7 @@ public class TicketController {
 
         ticketRepository.save(ticket.get());
 
-        return "buyticketssuccess";
+        return "ticket/buysuccess";
 
     }
 
@@ -66,6 +66,6 @@ public class TicketController {
 
         ticketRepository.save(ticket.get());
 
-        return "cancelticketsuccess";
+        return "ticket/cancelsuccess";
     }
 }

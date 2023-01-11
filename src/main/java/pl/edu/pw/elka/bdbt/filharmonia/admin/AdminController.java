@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.elka.bdbt.filharmonia.User;
 import pl.edu.pw.elka.bdbt.filharmonia.UserRepository;
+import pl.edu.pw.elka.bdbt.filharmonia.address.Address;
+import pl.edu.pw.elka.bdbt.filharmonia.address.AddressRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.concert.Concert;
 import pl.edu.pw.elka.bdbt.filharmonia.concert.ConcertRepository;
 import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
@@ -48,6 +50,9 @@ public class AdminController {
     @Autowired
     PhilharmonicRepository philharmonicRepository;
 
+    @Autowired
+    AddressRepository addressRepository;
+
 
     @GetMapping
     public String adminPanel(Model model) {
@@ -60,15 +65,19 @@ public class AdminController {
     public String hiringPanel(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("musician", new Musician());
+        model.addAttribute("address", new Address());
 //        model.addAttribute("musicians", musicianRepository.findAll());
         return "admin/hireemployee";
     }
 
     @PostMapping("/hire")
-    public void hire(@ModelAttribute User user, @ModelAttribute Musician musician, HttpServletResponse response) throws IOException {
+    public void hire(@ModelAttribute User user, @ModelAttribute Musician musician, @ModelAttribute Address address, HttpServletResponse response) throws IOException {
+        Philharmonic philharmonic = philharmonicRepository.findById(Long.valueOf("1")).get();
         user.setRole("ROLE_USER");
+        user.setPhilharmonic(philharmonic);
         User savedUser = userRepository.save(user);
         musician.setUser(savedUser);
+        musician.setAddress(address);
         musicianRepository.save(musician);
         response.sendRedirect("/admin");
 
@@ -195,6 +204,37 @@ public class AdminController {
         });
 
         response.sendRedirect("/admin/concert/" + id);
+    }
+
+    @PostMapping("/edit/musician/{id}")
+    public void editMusician(@PathVariable String id, @ModelAttribute Musician updatedMusician, @ModelAttribute User updatedUser, @ModelAttribute Address updatedAddress, HttpServletResponse response) throws IOException {
+        Musician musician = musicianRepository.findById(Long.valueOf(id)).get();
+
+        User user = musician.getUser();
+        user.setEmail(updatedUser.getEmail());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setBirthdate(updatedUser.getBirthdate());
+        user.setPhoneNumber(updatedUser.getPhoneNumber());
+        userRepository.save(user);
+
+        musician.setGender(updatedMusician.getGender());
+        musician.setIban(updatedMusician.getIban());
+        musician.setPesel(updatedMusician.getPesel());
+        musician.setSalary(updatedMusician.getSalary());
+        musician.setEducation(updatedMusician.getEducation());
+        musician.setSpecialization(updatedMusician.getSpecialization());
+        musicianRepository.save(musician);
+
+        Address address = musician.getAddress();
+        address.setTown(updatedAddress.getTown());
+        address.setStreet(updatedAddress.getStreet());
+        address.setApartamentNumber(updatedAddress.getApartamentNumber());
+        address.setPostcode(updatedAddress.getPostcode());
+
+        addressRepository.save(address);
+
+        response.sendRedirect("/musician/" + id);
     }
 
 }

@@ -31,7 +31,7 @@ public class ConcertController {
         model.addAttribute("concert", concert.get());
         model.addAttribute("tickets", concert.get().getTickets());
 
-        return "buytickets";
+        return "ticket/buy";
     }
 
 }

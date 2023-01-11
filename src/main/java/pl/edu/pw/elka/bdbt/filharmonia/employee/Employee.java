@@ -2,6 +2,7 @@ package pl.edu.pw.elka.bdbt.filharmonia.employee;
 
 import org.hibernate.validator.constraints.Length;
 import pl.edu.pw.elka.bdbt.filharmonia.User;
+import pl.edu.pw.elka.bdbt.filharmonia.address.Address;
 import pl.edu.pw.elka.bdbt.filharmonia.employee.musician.Musician;
 
 import javax.persistence.*;
@@ -17,15 +18,7 @@ import javax.persistence.*;
 public class Employee {
 
     @Id
-    @SequenceGenerator(
-            name="employee_sequence",
-            sequenceName = "employee_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "employee_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long id;
 
@@ -38,9 +31,16 @@ public class Employee {
     @Column(nullable = false)
     protected String gender;
 
+    @Column(nullable = true)
+    protected int salary;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     protected User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    protected Address address;
 
     public Employee() {}
 
@@ -60,6 +60,8 @@ public class Employee {
         return gender;
     }
 
+    public int getSalary() { return salary; }
+
     public User getUser() {
         return user;
     }
@@ -76,8 +78,20 @@ public class Employee {
         this.gender = gender;
     }
 
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
 }
