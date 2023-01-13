@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+#ticketContainer{
+    margin-top: 10px;
+    font-family: Roboto;
+    margin-inline: 25px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.ticket{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.ticket p{
+    color: black;
+    margin-block: 0.5rem;
+    margin-inline: 0.25rem;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+#actions a {
+    text-decoration: none;
+    color: black;
+}
+
+#actions span {
+    cursor: pointer;
+}
+
+#actions span:hover{
+    color: grey;
+}

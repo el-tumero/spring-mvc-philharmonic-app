@@ -43,10 +43,11 @@ public class UserController {
     public String tickets(Model model){
         Authentication ctx = SecurityContextHolder.getContext().getAuthentication();
         User user = userDao.findUserEntityByEmail(ctx.getName());
+        model.addAttribute("user", user);
 
         model.addAttribute("tickets", user.getTickets());
 //        user.getTickets().get(0).
-        return "tickets";
+        return "ticket/tickets";
     }
 
     @GetMapping("/register")
