@@ -12,7 +12,7 @@
         <div id="concert" th:each="concert: ${concerts}">
             <p th:text="${concert.getName()}"></p>
             <p th:text="${concert.getDateString()}"></p>
-            <a th:href="@{/concert/{id}/tickets(id = ${concert.getId()})}">Kup bilet</a>
+            <a th:href="@{/concert/{id}(id = ${concert.getId()})}">Informacje</a>
         </div>
     </section>
 

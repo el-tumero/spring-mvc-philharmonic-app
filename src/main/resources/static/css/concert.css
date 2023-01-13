@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+#info{
+    display: flex;
+    margin-inline: 25px;
+    min-height: 500px
+}
+
+.panel{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100px;
+    width: 50%;
+    /* background-color: red; */
+}
+
+.about{
+    width: 40%;
+}
+
+.description{
+    width: 60%;
+}
+
+.description #text{
+    width: 85%;
+}
+
+#descriptionTitle{
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+.panel .row{
+    height: 3rem;
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.musicians {
+    display: flex;
+    align-items: flex-start;
+    width: 50%;
+    flex-direction: column;
+    height: 10rem;
+}
+
+.musicians p {
+    margin-block: 5px;
+}
+
+#musiciansTitle {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.separator {
+    border-bottom: 1px black solid;
+}
+
+.panel #buybutton {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    border: 2px solid rgb(134,134,134);
+    padding-inline: 8px;
+    padding-block: 4px;
+    transition: background-color 50ms ease-out 50ms
+}
+
+.panel #buybutton:hover {
+    color: white;
+    background-color: rgb(134,134,134);
+}
+
+
+.panel #date {
+    font-weight: 700;
+    font-size: 25px;
+}

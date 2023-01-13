@@ -1,24 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      th:replace="fragments/layout :: layout(${concert.getName()}, ~{::link}, ~{::section})"
+>
 <head>
+    <link rel="stylesheet" th:href="@{/css/concert.css}">
     <meta charset="UTF-8">
-    <title th:text="'Filharmonia Narodowa: ' + ${concert.getName()}"></title>
 </head>
 <body>
-<div>
-    <h1 th:text="${concert.getName()}"></h1>
-    <h3 th:text="${concert.getDateString()}"></h3>
-    <p th:text="${concert.getDescription()}"></p>
-    <p th:text="'Typ: ' + ${concert.getType()}"></p>
-    <p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>
-    <p th:text="'Sala ' + ${concert.getHall().getName()}"></p>
-    <h3>Wykonawcy: </h3>
-    <tr th:each="musician: ${concert.getMusicians()}">
-        <p th:text="${musician.getUser().getFirstName()} + ' ' + ${musician.getUser().getLastName()} + ' - ' + ${musician.getSpecialization()}"></p>
-    </tr>
-    <a th:href="@{/concert/{id}/tickets(id=${concert.getId()})}">Kup bilet</a>
-</div>
+<section>
+    <div id="info">
+        <div class="panel about">
+            <div class="row separator">
+                <p id="date" th:text="${concert.getDateString()}"></p>
+                <a id="buybutton" th:href="@{/concert/{id}/tickets(id=${concert.getId()})}">Kup bilet</a>
+            </div>
+            <div class="row separator">
+                <p th:text="'Sala ' + ${concert.getHall().getName()}"></p>
+            </div>
+            <div class="row separator">
+                <p th:text="${concert.getType()}"></p>
+            </div>
+            <div class="musicians">
+                <p id="musiciansTitle">Wykonawcy</p>
+                <p th:each="musician: ${concert.getMusicians()}" th:text="${musician.getUser().getFullName()} + ' - ' + ${musician.getSpecialization()}"></p>
+<!--                <p th:text="${concert.getType()}"></p>-->
+            </div>
+
+        </div>
+        <div class="panel description">
+            <p id="descriptionTitle">Opis wydarzenia:</p>
+            <p id="text" th:text="${concert.getDescription()}"></p>
+        </div>
+
+    </div>
+<!--    123-->
+
+</section>
+<!--<div>-->
+<!--    <h1 th:text="${concert.getName()}"></h1>-->
+<!--    <h3 th:text="${concert.getDateString()}"></h3>-->
+<!--    <p th:text="${concert.getDescription()}"></p>-->
+<!--    <p th:text="'Typ: ' + ${concert.getType()}"></p>-->
+<!--    <p th:text="'Czas trwania: ' + ${concert.getDuration()}"></p>-->
+<!--    <p th:text="'Sala ' + ${concert.getHall().getName()}"></p>-->
+<!--    <h3>Wykonawcy: </h3>-->
+<!--    <tr th:each="musician: ${concert.getMusicians()}">-->
+<!--        <p th:text="${musician.getUser().getFirstName()} + ' ' + ${musician.getUser().getLastName()} + ' - ' + ${musician.getSpecialization()}"></p>-->
+<!--    </tr>-->
+
+<!--</div>-->
 </body>
 </html>
