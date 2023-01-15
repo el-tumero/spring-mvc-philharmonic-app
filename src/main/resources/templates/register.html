@@ -12,7 +12,7 @@
 <div id="registerContainer">
     <a href="/user/login" id="back"><span class="material-symbols-outlined">arrow_back</span></a>
     <h1>Stwórz konto</h1>
-    <form action="#" th:action="@{/user/register}" th:object="${user}" method="post">
+    <form action="#" id="form" th:action="@{/user/register}" th:object="${user}" method="post">
         <input class="input" type="email" placeholder="Email" th:field="*{email}">
         <small id="emailInfo"></small>
         <input class="input" type="password" placeholder="Hasło" th:field="*{password}">

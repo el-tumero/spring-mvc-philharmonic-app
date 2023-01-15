@@ -64,14 +64,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String createUser(@ModelAttribute User user, Model model) {
+    public void createUser(@ModelAttribute User user, HttpServletResponse response) throws IOException {
         Philharmonic philharmonic = philharmonicRepository.findById(Long.valueOf("1")).get();
         user.setRole("ROLE_USER");
         user.setPhilharmonic(philharmonic);
         userRepository.save(user);
-        List<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
-        return "done";
+        response.sendRedirect("/user/login");
     }
 
     @GetMapping("/logout")
