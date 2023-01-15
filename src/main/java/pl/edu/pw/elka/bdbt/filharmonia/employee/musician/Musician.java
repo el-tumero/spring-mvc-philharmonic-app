@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class Musician extends Employee {
 
     @Column(nullable = false)
-    private String education;
+    private String education = "wysokie";
 
     @Column(nullable = false)
     private String specialization;

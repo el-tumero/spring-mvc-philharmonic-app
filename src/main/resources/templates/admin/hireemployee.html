@@ -39,48 +39,48 @@
     </div>
 </nav>
 
-<form id="form">
+<form id="form" th:action="@{/admin/hire}" method="post">
     <div class="form-group">
         <label for="emailInput">Adres email</label>
-        <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Adres email" required>
+        <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Adres email" th:field="${user.email}" required>
     </div>
     <div class="form-group">
         <label for="firstNameInput">Imię</label>
-        <input type="text" class="form-control" id="firstNameInput" placeholder="Imię" required>
+        <input type="text" class="form-control" id="firstNameInput" placeholder="Imię" th:field="${user.firstName}" required>
     </div>
     <div class="form-group">
         <label for="lastNameInput">Nazwisko</label>
-        <input type="text" class="form-control" id="lastNameInput" placeholder="Nazwisko" required>
+        <input type="text" class="form-control" id="lastNameInput" placeholder="Nazwisko" th:field="${user.lastName}" required>
     </div>
     <div class="form-group">
         <label for="birthDateInput">Data urodzenia</label>
-        <input type="date" class="form-control" id="birthDateInput" required>
+        <input type="date" class="form-control" id="birthDateInput" th:field="${user.birthdate}" required>
     </div>
     <div class="form-group">
         <label for="phoneNumberInput">Numer telefonu</label>
-        <input type="text" class="form-control" id="phoneNumberInput" placeholder="Numer telefonu" required>
+        <input type="text" class="form-control" id="phoneNumberInput" placeholder="Numer telefonu" th:field="${user.phoneNumber}" required>
     </div>
     <div class="form-group">
         <label for="passwordInput">Hasło</label>
-        <input type="password" class="form-control" id="passwordInput" placeholder="Hasło" required>
+        <input type="password" class="form-control" id="passwordInput" placeholder="Hasło" th:field="${user.password}" minlength="8" required>
         <small id="passwordHelp" class="form-text text-muted">Minimum 8 znaków</small>
     </div>
     <div class="form-group">
         <label>Płeć</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="femaleRadio" value="kobieta" checked>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="femaleRadio" value="kobieta" th:field="${musician.gender}">
             <label class="form-check-label" for="femaleRadio">
                 kobieta
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="maleRadio" value="mężczyzna">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="maleRadio" th:field="${musician.gender}" value="mężczyzna">
             <label class="form-check-label" for="maleRadio">
                 mężczyzna
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="differentRadio" value="inne">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="differentRadio" th:field="${musician.gender}" value="inne">
             <label class="form-check-label" for="differentRadio">
                 inne
             </label>
@@ -88,32 +88,32 @@
     </div>
     <div class="form-group">
         <label for="ibanInput">IBAN</label>
-        <input type="text" class="form-control" id="ibanInput" placeholder="Numer konta" required>
+        <input type="text" class="form-control" id="ibanInput" placeholder="Numer konta bankowego" th:field="${musician.iban}" required>
     </div>
     <div class="form-group">
         <label for="peselInput">PESEL</label>
-        <input type="text" class="form-control" id="peselInput" placeholder="Numer PESEL" required>
+        <input type="text" class="form-control" id="peselInput" placeholder="Numer PESEL" th:field="${musician.pesel}" required>
     </div>
     <div class="form-group">
         <label for="salaryInput">Wynagrodzenie</label>
-        <input type="number" class="form-control" id="salaryInput" required>
+        <input type="number" class="form-control" id="salaryInput" th:field="${musician.salary}" required>
     </div>
     <div class="form-group">
         <label>Wykształcenie</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="highRadio" value="wysokie" checked>
+            <input class="form-check-input" type="radio" name="exampleRadios" id="highRadio" value="wysokie" th:field="${musician.education}">
             <label class="form-check-label" for="highRadio">
                 wysokie
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="mediumRadio" value="średnie">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="mediumRadio" value="średnie" th:field="${musician.education}">
             <label class="form-check-label" for="mediumRadio">
                 średnie
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="noRadio" value="brak">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="noRadio" value="brak" th:field="${musician.education}">
             <label class="form-check-label" for="noRadio">
                 brak
             </label>
@@ -121,21 +121,21 @@
     </div>
     <div class="form-group">
         <label for="specializationInput">Specjalizacja (instrument)</label>
-        <input type="text" class="form-control" id="specializationInput" placeholder="Specjalizacja" required>
+        <input type="text" class="form-control" id="specializationInput" placeholder="Specjalizacja" th:field="${musician.specialization}" required>
     </div>
     <div class="row">
         <label>Adres</label>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Miejscowość" required>
+            <input type="text" class="form-control" placeholder="Miejscowość" th:field="${address.town}" required>
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Ulica" required>
+            <input type="text" class="form-control" placeholder="Ulica" th:field="${address.street}" required>
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Numer mieszkania">
+            <input type="text" class="form-control" placeholder="Numer mieszkania" th:field="${address.apartamentNumber}">
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Kod pocztowy" required>
+            <input type="text" class="form-control" placeholder="Kod pocztowy" th:field="${address.postcode}" required>
         </div>
 
     </div>

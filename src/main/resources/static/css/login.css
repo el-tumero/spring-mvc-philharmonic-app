@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+body{
+    font-family: Roboto;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(230, 230, 230);
+}
+
+#loginContainer{
+    margin-top: 5rem;
+    padding: 2rem;
+    background-color: white;
+    width: 30%;
+}
+
+#loginContainer form{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.input{
+    padding: 10px;
+    border-radius: 0px;
+    border: 2px solid black;
+    margin-block: 0.4rem;
+    font-size: 18px;
+}
+
+.input:focus{
+    outline: none;
+     border: 2px solid blue;
+    border-radius: 0px;
+}
+
+#loginButton{
+    margin-block: 0.4rem;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    border: 2px solid rgb(134,134,134);
+    background-color: rgb(134,134,134);
+    transition: background-color 50ms ease-out 50ms;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+#loginButton:hover{
+    color: black;
+    background-color: transparent;
+}
+
+.panel #buybutton {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(134,134,134);
+    font-weight: 700;
+    border: 2px solid rgb(134,134,134);
+    padding-inline: 8px;
+    padding-block: 4px;
+    transition: background-color 50ms ease-out 50ms
+}
+
+.panel #buybutton:hover {
+    color: black;
+    background-color: transparent;
+}
+
+#back{
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+#register{
+    text-align: center;
+    margin-top: 1rem;
+}

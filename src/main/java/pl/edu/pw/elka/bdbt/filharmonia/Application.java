@@ -56,9 +56,6 @@ public class Application {
 
 		model.addAttribute("concerts", philharmonic.get().getConcerts());
 
-//		philharmonic.get().getConcerts().get(0).getDate().toString()
-
-//		philharmonic.get().getOwner().getFirstName()
 		if(ctx.getName().equals("anonymousUser")){
 			model.addAttribute("user", null);
 			return "index";

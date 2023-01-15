@@ -29,7 +29,7 @@ public class Employee {
     protected String iban;
 
     @Column(nullable = false)
-    protected String gender;
+    protected String gender = "kobieta";
 
     @Column(nullable = true)
     protected int salary;
