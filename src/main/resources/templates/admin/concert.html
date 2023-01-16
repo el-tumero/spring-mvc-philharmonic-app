@@ -5,20 +5,46 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${concert.getName()}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <style>
+    body{
+            margin: 25px;
+    }
+     #back{
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+     }
+     #back:hover{
+            color: rgb(134,134,134);
+     }
+    </style>
 </head>
 <body>
+<a id="back" href="/admin">
+    <span class="material-symbols-outlined">
+    arrow_back
+    </span>
+    powrót
+</a>
 <h2 th:text="'Edycja: ' + ${concert.getName()}"></h2>
+<br>
 <select name="selection" id="selection" form="form">
     <option th:each="hall: ${halls}" th:value="${hall.getId()}" th:text="${hall.getName()}" th:selected="${concert.getHall().getId() == hall.getId()}"></option>
 </select>
 <form th:action="@{/admin/concert/edit/{id}(id = ${concert.getId()})}" id="form" method="post">
-    <input type="datetime-local" th:value="${concert.getDate().toString()}" th:field="${concert.date}">
-    <input placeholder="Nazwa" type="text" th:value="${concert.getName()}" th:field="${concert.name}">
-    <input placeholder="Opis" th:value="${concert.getDescription()}" th:field="${concert.description}">
-    <input placeholder="Typ" th:value="${concert.getType()} "type="text" th:field="${concert.type}">
-    <input type="number" th:value="${concert.getDuration()}" th:field="${concert.duration}">
+    <input type="datetime-local" th:value="${concert.getDate().toString()}" th:field="${concert.date}" required>
+    <input placeholder="Nazwa" type="text" th:value="${concert.getName()}" th:field="${concert.name}" required>
+    <input placeholder="Opis" th:value="${concert.getDescription()}" th:field="${concert.description}" required>
+    <input placeholder="Typ" th:value="${concert.getType()} "type="text" th:field="${concert.type}" required>
+    <input type="number" th:value="${concert.getDuration()}" th:field="${concert.duration}" required>
     <input type="submit" value="Zapisz zmiany">
 </form>
+<br />
 <h3>Wykonawcy</h3>
 <p th:if="${concert.getMusicians().empty}">Żaden muzyk nie został jeszcze dodany do wydarzenia</p>
 <table th:if="${!concert.getMusicians().empty}">
@@ -58,24 +84,26 @@
                     <small th:if="${musician.getGender().equals('kobieta')}">Zajęta!</small>
                     <small th:if="${musician.getGender().equals('mężczyzna')}">Zajęty!</small>
                 </div>
-                <input th:if="${musician.isAvailable(concert.getDate())}"type="submit" value="Add">
+                <input th:if="${musician.isAvailable(concert.getDate())}"type="submit" value="Dodaj">
             </form>
         </td>
     </tr>
 </table>
 
 <h3>Bilety</h3>
-<p th:text="'Ilość miejsc: ' + ${concert.getHall().getCapacity()}"></p>
-<form th:action="@{/admin/concert/{id}/tickets/start(id = ${concert.getId()})}" method="post">
+<p th:text="'Ilość miejsc na sali: ' + ${concert.getHall().getCapacity()}"></p>
+<p th:if="${!concert.getTickets().empty}">Sprzedaż trwa...</p>
+<form th:if="${concert.getTickets().empty}" th:action="@{/admin/concert/{id}/tickets/start(id = ${concert.getId()})}" method="post">
     <input type="submit" value="Rozpocznij sprzedaż">
 </form>
-<form th:action="@{/admin/concert/{id}/tickets/delete(id = ${concert.getId()})}" method="post">
+<form th:if="${!concert.getTickets().empty}" th:action="@{/admin/concert/{id}/tickets/delete(id = ${concert.getId()})}" method="post">
     <input type="submit" value="Usuń bilety">
 </form>
 
 <h3>Usuń koncert</h3>
 <form th:action="@{/admin/concert/delete/{id}(id = ${concert.getId()})}" method="post">
-    <input type="submit" value="Usuń">
+    <input type="submit" value="Usuń" th:disabled="${!concert.getTickets().empty}">
+    <p style="color: red;" th:if="${!concert.getTickets().empty}">Nie można usunąć koncertu, w trakcie trwania sprzedaży</p>
 </form>
 
 </body>

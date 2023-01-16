@@ -216,6 +216,7 @@ public class AdminController {
         user.setLastName(updatedUser.getLastName());
         user.setBirthdate(updatedUser.getBirthdate());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setPassword(updatedUser.getPassword());
         userRepository.save(user);
 
         musician.setGender(updatedMusician.getGender());

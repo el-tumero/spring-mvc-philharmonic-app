@@ -54,8 +54,8 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String register(Model model){
-        model.addAttribute("message", "ssr java epic");
+    public String register(Model model, @RequestParam("error") Optional<String> error){
+        if(error.isPresent()) model.addAttribute("error", true);
         model.addAttribute("user", new User());
         return "register";
     }

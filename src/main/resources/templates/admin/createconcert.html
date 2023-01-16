@@ -5,21 +5,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Stwórz koncert</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 5px;
+        }
+        #form{
+            width: 50%;
+            margin: auto;
+        }
+        nav{
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
 
-<select name="selection" id="selection" form="form">
-    <option th:each="hall: ${halls}" th:value="${hall.getId()}" th:text="${hall.getName()}"></option>
-</select>
-<form action="#" th:action="@{/admin/concert/create}"id="form" method="post">
-<!--  <input type="number" th:field="${concert.id}">-->
-  <input type="text" placeholder="Nazwa" th:field="${concert.name}">
-  <input type="datetime-local" th:field="${concert.date}">
-  <input type="text" placeholder="Typ" th:field="${concert.type}">
-  <input type="text" placeholder="Opis" th:field="${concert.description}">
-  <input type="number" th:field="${concert.duration}">
-  <input type="submit" value="Stwórz koncert!">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/admin">Panel administratora</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Powrót do strony głównej</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/hire">Zatrudnij pracownika </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/concert/create">Stwórz koncert<span class="sr-only"></span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<form id="form" th:action="@{/admin/concert/create}" method="post">
+    <div class="form-group">
+        <label for="hallInput">Sala</label>
+        <select name="selection" class="form-select" id="hallInput" form="form">
+            <option th:each="hall: ${halls}" th:value="${hall.getId()}" th:text="${hall.getName()}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="nameInput">Nazwa</label>
+        <input type="text" class="form-control" id="nameInput" placeholder="Nazwa koncertu" th:field="${concert.name}" required>
+    </div>
+    <div class="form-group">
+        <label for="dateInput">Data</label>
+        <input type="datetime-local" class="form-control" id="dateInput" th:field="${concert.date}" required>
+    </div>
+    <div class="form-group">
+        <label for="typeInput">Typ</label>
+        <input type="text" class="form-control" id="typeInput" placeholder="Typ koncertu" th:field="${concert.type}" required>
+    </div>
+    <div class="form-group">
+        <label for="descriptionInput">Opis</label>
+        <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Opis koncertu" th:field="${concert.description}" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="durationInput">Czas trwania</label>
+        <input type="number" class="form-control" id="durationInput" placeholder="0" th:field="${concert.duration}" required>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Stwórz koncert</button>
 </form>
+
+
+<!--<form action="#" th:action="@{/admin/concert/create}"id="" method="post">-->
+<!--&lt;!&ndash;  <input type="number" th:field="${concert.id}">&ndash;&gt;-->
+<!--  <input type="text" placeholder="Nazwa" th:field="${concert.name}">-->
+<!--  <input type="datetime-local" th:field="${concert.date}">-->
+<!--  <input type="text" placeholder="Typ" th:field="${concert.type}">-->
+<!--  <input type="text" placeholder="Opis" th:field="${concert.description}">-->
+<!--  <input type="number" th:field="${concert.duration}">-->
+<!--  <input type="submit" value="Stwórz koncert!">-->
+<!--</form>-->
 
 
 

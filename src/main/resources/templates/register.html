@@ -13,7 +13,7 @@
 <div id="registerContainer">
     <a href="/user/login" id="back"><span class="material-symbols-outlined">arrow_back</span></a>
     <h1>Stwórz konto</h1>
-    <div class="dialog error">
+    <div th:if="${error}" class="dialog error">
         Błąd tworzenia użytkownika. Użytkownik o takim mailu już istnieje.
     </div>
     <form action="#" id="form" th:action="@{/user/register}" th:object="${user}" method="post">
