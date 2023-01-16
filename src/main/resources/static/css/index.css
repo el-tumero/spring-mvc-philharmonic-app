@@ -1,3 +1,42 @@
-#concert{
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+#tab{
     margin-left: 25px;
+    margin-right: 25px;
+     width: 100%;
+     display: flex;
+     justify-content: flex-start;
 }
+#concerts{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.concert{
+    font-family: Roboto;
+    border-bottom: 3px solid;
+    id black;
+    padding-bottom: 1rem;
+}
+
+.concert .name{
+    font-weight: 700;
+    font-size: 35px;
+    margin-block: 1rem;
+}
+
+canvas{
+    display:inline-block;
+    position: relative;
+    left: 20%;
+    top: 0%
+}
+
+#image{
+    width: 60%;
+    justify-content: center;
+    margin-right: 25px;
+
+}
+
