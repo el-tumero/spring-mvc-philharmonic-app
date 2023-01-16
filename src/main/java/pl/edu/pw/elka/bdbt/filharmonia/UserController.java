@@ -69,17 +69,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void createUser(@ModelAttribute User user, @RequestParam("error") Optional<String> error, HttpServletResponse response) throws IOException {
+    public void createUser(@ModelAttribute User user, HttpServletResponse response) throws IOException {
         Philharmonic philharmonic = philharmonicRepository.findById(Long.valueOf("1")).get();
         user.setRole("ROLE_USER");
         user.setPhilharmonic(philharmonic);
-        User foundUser = userDao.findUserEntityByEmail(user.getEmail());
-        if(foundUser != null){
+        try {
+            User foundUser = userDao.findUserEntityByEmail(user.getEmail());
             response.sendRedirect("/user/register?error");
-            return;
+        } catch (UsernameNotFoundException error) {
+            userRepository.save(user);
+            response.sendRedirect("/user/login?success");
         }
-        userRepository.save(user);
-        response.sendRedirect("/user/login?success");
     }
 
     @GetMapping("/logout")
