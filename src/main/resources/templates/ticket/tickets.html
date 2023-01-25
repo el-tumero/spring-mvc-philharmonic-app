@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/dialog.css}">
     <script defer th:src="@{/js/ticket/tickets.js}"></script>
-    <p class="dialog warn" style="width: fit-content; margin: 25px;" th:if="tickets.empty">Brak zakupionych biletów</p>
+    <p class="dialog warn" style="width: fit-content; margin: 25px;" th:if="${tickets.empty}">Brak zakupionych biletów</p>
     <div id="ticketContainer">
         <div class="ticket" th:each="ticket: ${tickets}">
             <p class="bold" th:text="${ticket.getConcert().getName()}"></p>

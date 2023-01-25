@@ -39,7 +39,7 @@
 <form th:action="@{/admin/concert/edit/{id}(id = ${concert.getId()})}" id="form" method="post">
     <input type="datetime-local" th:value="${concert.getDate().toString()}" th:field="${concert.date}" required>
     <input placeholder="Nazwa" type="text" th:value="${concert.getName()}" th:field="${concert.name}" required>
-    <input placeholder="Opis" th:value="${concert.getDescription()}" th:field="${concert.description}" required>
+    <textarea style="border: 1px solid rgb(118, 118, 118); border-radius: 2px; width: 30%; height: 250px;" class="form-control" placeholder="Opis" th:value="${concert.getDescription()}" th:field="${concert.description}" required />
     <input placeholder="Typ" th:value="${concert.getType()} "type="text" th:field="${concert.type}" required>
     <input type="number" th:value="${concert.getDuration()}" th:field="${concert.duration}" required>
     <input type="submit" value="Zapisz zmiany">

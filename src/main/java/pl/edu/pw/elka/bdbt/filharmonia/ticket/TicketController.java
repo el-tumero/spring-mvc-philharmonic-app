@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pw.elka.bdbt.filharmonia.User;
 import pl.edu.pw.elka.bdbt.filharmonia.dao.UserDao;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -23,17 +25,17 @@ public class TicketController {
 
 
     @PostMapping("/buy/{id}")
-    public String buyTicket(@PathVariable String id){
+    public void buyTicket(@PathVariable String id, HttpServletResponse response) throws IOException {
         Authentication ctx = SecurityContextHolder.getContext().getAuthentication();
         if(ctx.getName().equals("anonymusUser")){
-            return "403";
+            return;
         }
 
         Long ticketId = Long.valueOf(id);
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
-        if(ticket.isEmpty()) return "404";
+        if(ticket.isEmpty()) return;
 
-        if(ticket.get().getUser() != null) return "400";
+        if(ticket.get().getUser() != null) return;
 
         User user = userDao.findUserEntityByEmail(ctx.getName());
 
@@ -41,31 +43,34 @@ public class TicketController {
 
         ticketRepository.save(ticket.get());
 
-        return "ticket/buysuccess";
+        response.sendRedirect("/user/tickets");
+
+//        return "ticket/buysuccess";
 
     }
 
     @PostMapping("/cancel/{id}")
-    public String cancelTicket(@PathVariable String id){
+    public void cancelTicket(@PathVariable String id, HttpServletResponse response) throws IOException {
         Authentication ctx = SecurityContextHolder.getContext().getAuthentication();
         if(ctx.getName().equals("anonymusUser")){
-            return "403";
+            return;
         }
 
         Long ticketId = Long.valueOf(id);
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
-        if(ticket.isEmpty()) return "404";
+        if(ticket.isEmpty()) return;
 
-        if(ticket.get().getUser() == null) return "403";
+        if(ticket.get().getUser() == null) return;
 
         User user = userDao.findUserEntityByEmail(ctx.getName());
 
-        if(!ticket.get().getUser().getEmail().equals(ctx.getName())) return "403";
+        if(!ticket.get().getUser().getEmail().equals(ctx.getName())) return;
 
         ticket.get().setUser(null);
 
         ticketRepository.save(ticket.get());
 
-        return "ticket/cancelsuccess";
+        response.sendRedirect("/user/tickets");
+//        return "ticket/cancelsuccess";
     }
 }
